@@ -26,7 +26,7 @@
 #define CPUfreq					12000000.0f
 
 #define Kp							20						//PI proportional constant
-#define Ki							1							//PI integral constant
+#define Ti							4.5							//PI integral constant
 
 #define LCDrefreshRate	100						//number of executions before LCD is refreshed
 
@@ -101,10 +101,10 @@ int main ()
 		error = AD2f - AD3f;										//error = setpoint curent - current current
 		integral = integral + error;
 		
-		if (integral > ADCmaxValue)							//integral max limit
-			integral = ADCmaxValue;
+//		if (integral > ADCmaxValue)							//integral max limit
+//			integral = ADCmaxValue;
 		
-		PWM = (Kp * error) + (Ki * integral);
+		PWM = (Kp * error) + ((Kp/Ti) * integral);
 		
 		if (PWM > ADCmaxValue)			//output max limit
 			PWM = ADCmaxValue;
